@@ -7,18 +7,62 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import java.util.ArrayList;
+import android.text.TextUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+
 
 public class MainActivity extends AppCompatActivity {
+
+    private final ArrayList<String> students = new ArrayList<>();
+    private StudentAdapter studentAdapater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+        TextView prTest = findViewById(R.id.textView);
+        
+        EditText studentName = findViewById(R.id.editStudent);
+
+        Button addButton = findViewById(R.id.btnWelcome);
+        RecyclerView recyclerView = findViewById(R.id.recyclerStudent);
+
+        studentAdapater = new StudentAdapter(students);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.setAdapter(studentAdapter)
+        welcomeButton.setOnClickListener(v -> {
+            String name = studentName.getText().toString().trim();
+
+            if (name.isEmpty()) {
+                studentName.setError("please enter a student name");
+
+                return;
+            }
+
+
+            students.add(name);
+
+            String studentList = TextUtils.join("\n", students);
+            prTest.setText(studentList);
+
+            studentName.setText("");
+        });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
     }
+
+
+
 }
