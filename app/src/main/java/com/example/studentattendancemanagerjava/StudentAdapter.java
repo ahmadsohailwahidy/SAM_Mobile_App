@@ -1,8 +1,8 @@
 package com.example.studentattendancemanagerjava;
 
-import android.view.LayoutInFlater;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import android.widget.TextView;
@@ -10,14 +10,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.RecylerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentViewHolder> {
 
     private final ArrayList<String> students;
 
     public StudentAdapter(ArrayList<String> students) {
-        this.students = student;
+        this.students = students;
 
 
     }
@@ -27,7 +27,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     public StudentViewHolder onCreateViewHolder(
         @NonNull ViewGroup parent, int ViewType
     ) {
-        View view = LayoutInFlater.from(parent.getContext()).inflate(R.layout.item_student, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_student, parent, false);
         return new StudentViewHolder(view);
 
     }

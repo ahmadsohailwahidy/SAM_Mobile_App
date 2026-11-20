@@ -3,7 +3,7 @@ package com.example.studentattendancemanagerjava;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat   .app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -20,26 +20,44 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MainActivity extends AppCompatActivity {
 
     private final ArrayList<String> students = new ArrayList<>();
-    private StudentAdapter studentAdapater;
+    private StudentAdapter studentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
+        try {
+    Class.forName("androidx.recyclerview.widget.RecyclerView");
+
+    android.util.Log.d(
+        "RecyclerTest",
+        "RecyclerView class loaded successfully"
+    );
+
+} catch (Throwable e) {
+    android.util.Log.e(
+        "RecyclerTest",
+        "Failed to load RecyclerView",
+        e
+    );
+}
         setContentView(R.layout.activity_main);
-        TextView prTest = findViewById(R.id.textView);
+        
+        // TextView prTest = findViewById(R.id.textView);
         
         EditText studentName = findViewById(R.id.editStudent);
 
         Button addButton = findViewById(R.id.btnWelcome);
         RecyclerView recyclerView = findViewById(R.id.recyclerStudent);
 
-        studentAdapater = new StudentAdapter(students);
+        studentAdapter = new StudentAdapter(students);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setAdapter(studentAdapter)
-        welcomeButton.setOnClickListener(v -> {
+        recyclerView.setAdapter(studentAdapter);
+
+        
+        addButton.setOnClickListener(v -> {
             String name = studentName.getText().toString().trim();
 
             if (name.isEmpty()) {
@@ -51,9 +69,12 @@ public class MainActivity extends AppCompatActivity {
 
             students.add(name);
 
-            String studentList = TextUtils.join("\n", students);
-            prTest.setText(studentList);
+            int newPosition = students.size() - 1;
+            studentAdapter.notifyItemInserted(newPosition);
 
+            recyclerView.scrollToPosition(newPosition);
+
+            
             studentName.setText("");
         });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
