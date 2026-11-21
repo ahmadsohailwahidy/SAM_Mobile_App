@@ -8,12 +8,30 @@ public class Student {
         ABSENT
     }
 
+    private long id;
     private String name;
     private Status status;
 
     public Student(String name){
+        this(-1, name, Status.NOT_MARKED);
+    }
+
+    public Student(long id , String name) {
+        this(id, name, Status.NOT_MARKED);
+    }
+
+    public Student(long id, String name, Status status){
+        this.id = id;
         this.name=name;
-        this.status=Status.NOT_MARKED;
+        this.status=status;
+    }
+
+    public long getId(){
+        return id;
+    }
+
+    public void setId(long id){
+        this.id=id;
     }
 
     public String getName(){
