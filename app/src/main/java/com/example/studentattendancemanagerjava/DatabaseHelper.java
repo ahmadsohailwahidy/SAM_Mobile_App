@@ -2,7 +2,11 @@ package com.example.studentattendancemanagerjava;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
+
+import java.util.ArrayList;
+
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -93,6 +97,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
 
         return studentId;
+    }
+
+
+    public ArrayList<Student> getAllStudents() {
+        ArrayList<Student> students = new ArrayList<>();
+        
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String[] columns = {
+            COL_STUDENT_ID,
+            COL_STUDENT_NAME
+        };
+
+
+
+        ///SELECT id, name
+        ///FROM students
+        ///ORDER BY id ASC;
+
+        try (Cursor cursor = db.query(
+            TABLE_STUDENTS,
+            columns,
+            null,
+            null,
+            null,
+            null,
+            COL_STUDENT_ID + " ASC"
+        )) {
+            while(cursor.moveToNext()) {
+                long id = cursor.getLong(cursor.getColumnIndexOrThrow(COL_STUDENT_ID));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(COL_STUDENT_NAME));
+
+                Student student = new Student(id, name);
+
+                students.add(student);
+
+            }
+        }
+
+        return students;
     }
 
     @Override
