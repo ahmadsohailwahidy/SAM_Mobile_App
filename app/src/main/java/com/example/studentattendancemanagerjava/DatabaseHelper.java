@@ -251,6 +251,85 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return attendance;
     }
 
+
+public ArrayList<StudentAttendanceReport> getMonthlyAttendanceReport(
+        String startDate,
+        String endDateExclusive) {
+
+    ArrayList<StudentAttendanceReport> reports = new ArrayList<>();
+
+    SQLiteDatabase db = this.getReadableDatabase();
+
+    String sql =
+            "SELECT " +
+            "s.id, " +
+            "s.name, " +
+
+            "SUM(CASE WHEN a.status = 'PRESENT' " +
+            "THEN 1 ELSE 0 END) AS present_count, " +
+
+            "SUM(CASE WHEN a.status = 'ABSENT' " +
+            "THEN 1 ELSE 0 END) AS absent_count, " +
+
+            "COUNT(a.id) AS total_marked " +
+
+            "FROM students s " +
+
+            "LEFT JOIN attendance a " +
+            "ON s.id = a.student_id " +
+            "AND a.attendance_date >= ? " +
+            "AND a.attendance_date < ? " +
+
+            "GROUP BY s.id, s.name " +
+
+            "ORDER BY s.name ASC";
+
+    String[] selectionArgs = {
+            startDate,
+            endDateExclusive
+    };
+
+    try (Cursor cursor = db.rawQuery(sql, selectionArgs)) {
+
+        while (cursor.moveToNext()) {
+
+            long studentId = cursor.getLong(
+                    cursor.getColumnIndexOrThrow("id")
+            );
+
+            String studentName = cursor.getString(
+                    cursor.getColumnIndexOrThrow("name")
+            );
+
+            int presentCount = cursor.getInt(
+                    cursor.getColumnIndexOrThrow("present_count")
+            );
+
+            int absentCount = cursor.getInt(
+                    cursor.getColumnIndexOrThrow("absent_count")
+            );
+
+            int totalMarked = cursor.getInt(
+                    cursor.getColumnIndexOrThrow("total_marked")
+            );
+
+            StudentAttendanceReport report =
+                    new StudentAttendanceReport(
+                            studentId,
+                            studentName,
+                            presentCount,
+                            absentCount,
+                            totalMarked
+                    );
+
+            reports.add(report);
+        }
+    }
+
+    return reports;
+}
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         //Database Migration Logic will added when the
