@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.EditText;
 import java.util.ArrayList;
+import java.util.zip.DataFormatException;
+
 import android.text.TextUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final ArrayList<Student> students = new ArrayList<>();
     private StudentAdapter studentAdapter;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +47,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         
         // TextView prTest = findViewById(R.id.textView);
+
+        databaseHelper = new DatabaseHelper(this);
+
+        students.addAll(databaseHelper.getAllStudents());
+
         
         EditText studentName = findViewById(R.id.editStudent);
 
         Button addButton = findViewById(R.id.btnWelcome);
         RecyclerView recyclerView = findViewById(R.id.recyclerStudent);
+
+        databaseHelper = new DatabaseHelper(this);
+
+        students.addAll(databaseHelper.getAllStudents());
 
         studentAdapter = new StudentAdapter(students);
 
@@ -66,7 +78,16 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            Student newStudent = new Student(name);
+            long studentId = databaseHelper.addStudent(name);
+
+            if (studentId == -1) {
+                android.widget.Toast.makeText(this, "Failed to save student", android.widget.Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+
+            Student newStudent = new Student(studentId, name);
 
             students.add(newStudent);
 
@@ -83,6 +104,16 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    @Override
+    protected void onDestroy(){
+
+        if(databaseHelper != null) {
+            databaseHelper.close();
+        }
+
+        super.onDestroy();
     }
 
 
