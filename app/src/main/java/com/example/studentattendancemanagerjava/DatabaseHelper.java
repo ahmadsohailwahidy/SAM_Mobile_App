@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -195,6 +196,59 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
+    }
+
+    public HashMap<Long, Student.Status> getAttendanceByDate(String date) {
+
+        HashMap<Long, Student.Status> attendance = new HashMap<>();
+
+        if (date == null || date.trim().isEmpty()) {
+            return attendance;
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] columns = {
+            COL_STUDENT_FK,
+            COL_STATUS
+        };
+
+        String selection = COL_ATTENDANCE_DATE + " = ?";
+
+        String[] selectionArgs = {
+            date.trim()
+        };
+
+        try (Cursor cursor = db.query(
+            TABLE_ATTENDANCE,
+            columns,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            null
+        )) {
+            while (cursor.moveToNext()) {
+                long studentId = cursor.getLong(cursor.getColumnIndexOrThrow(COL_STUDENT_FK));
+
+                String statusText = cursor.getString(cursor.getColumnIndexOrThrow(COL_STATUS));
+
+                try {
+                    Student.Status status = Student.Status.valueOf(statusText);
+
+                    attendance.put(studentId, status);
+                } catch (IllegalArgumentException e) {
+
+                    android.util.Log.e(
+                        "DatabaseHelper",
+                        "Invalid attendance status: " + statusText,
+                        e
+                    );
+                }
+            }
+        }
+
+        return attendance;
     }
 
     @Override
