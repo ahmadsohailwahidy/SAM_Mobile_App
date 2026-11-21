@@ -13,6 +13,11 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.zip.DataFormatException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+
 import android.text.TextUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -55,6 +60,17 @@ public class MainActivity extends AppCompatActivity {
 
         students.addAll(databaseHelper.getAllStudents());
 
+        String attendanceDate = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date());
+
+        HashMap<Long, Student.Status> todayAttendance = databaseHelper.getAttendanceByDate(attendanceDate);
+
+        for(Student student: students) {
+
+            Student.Status status = todayAttendance.getOrDefault(student.getId(), Student.Status.NOT_MARKED);
+
+            student.setStatus(status);
+        }
+
         
         EditText studentName = findViewById(R.id.editStudent);
 
@@ -63,7 +79,21 @@ public class MainActivity extends AppCompatActivity {
 
       
 
-        studentAdapter = new StudentAdapter(students);
+        studentAdapter = new StudentAdapter(students, (student, newStatus) -> {
+
+            boolean saved = databaseHelper.markAttendance(student.getId(), attendanceDate, newStatus);
+
+            if (saved) {
+
+                android.widget.Toast.makeText(
+                    this, "Attendance saved successfully", android.widget.Toast.LENGTH_SHORT
+                ).show();
+            } else {
+                android.widget.Toast.makeText(this, "Failed to save attendance", android.widget.Toast.LENGTH_SHORT).show();
+            }
+
+            return saved;
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 

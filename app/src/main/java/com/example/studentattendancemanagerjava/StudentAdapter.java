@@ -17,8 +17,23 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     private final ArrayList<Student> students;
 
-    public StudentAdapter(ArrayList<Student> students) {
+        public interface OnAttendanceChangeListener {
+
+            boolean onAttendanceChangeRequested(
+                Student student,
+                Student.Status newStatus
+            );
+        
+            
+        }
+
+    private final OnAttendanceChangeListener listener;
+
+
+
+    public StudentAdapter(ArrayList<Student> students, OnAttendanceChangeListener listener) {
         this.students = students;
+        this.listener = listener;
 
 
     }
@@ -44,17 +59,38 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         updateStatusText(holder, student);
 
         holder.btnPresent.setOnClickListener(v -> {
-            student.setStatus(Student.Status.PRESENT);
-            updateStatusText(holder, student);
+            changeStatus(
+                holder, student, Student.Status.PRESENT
+            );
+            // student.setStatus(Student.Status.PRESENT);
+            // updateStatusText(holder, student);
         });
 
         holder.btnAbsent.setOnClickListener(v -> {
-            student.setStatus(Student.Status.ABSENT);
-            updateStatusText(holder, student);
+            changeStatus(holder, student, Student.Status.ABSENT);
+            // student.setStatus(Student.Status.ABSENT);
+            // updateStatusText(holder, student);
         });
     }
 
-    public void updateStatusText(StudentViewHolder holder, Student student) {
+    private void changeStatus(StudentViewHolder holder, Student student, Student.Status newStatus) {
+
+        if (listener == null) {
+            return;
+        }
+
+        boolean saved = listener.onAttendanceChangeRequested(student, newStatus);
+
+        if(saved) {
+            student.setStatus(newStatus);
+
+            updateStatusText(holder, student);
+        }
+    }
+
+    
+
+    private void updateStatusText(StudentViewHolder holder, Student student) {
 
         switch (student.getStatus()) {
             case PRESENT:
