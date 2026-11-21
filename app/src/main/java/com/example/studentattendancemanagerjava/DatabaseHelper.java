@@ -2,6 +2,7 @@ package com.example.studentattendancemanagerjava;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
+import android.content.ContentValues;
 
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -77,11 +78,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 
     }
 
+    public long addStudent(String name){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(COL_STUDENT_NAME, name);
+
+        long studentId = db.insert(
+                TABLE_STUDENTS,
+                null,
+                values
+        );
+
+        return studentId;
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
         //Database Migration Logic will added when the
         //database schema changes.
     }
 
+    
 
 }
