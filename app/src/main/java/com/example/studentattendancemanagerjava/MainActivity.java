@@ -48,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
         
         // TextView prTest = findViewById(R.id.textView);
 
+
         databaseHelper = new DatabaseHelper(this);
+
+        students.clear();
 
         students.addAll(databaseHelper.getAllStudents());
 
@@ -58,9 +61,7 @@ public class MainActivity extends AppCompatActivity {
         Button addButton = findViewById(R.id.btnWelcome);
         RecyclerView recyclerView = findViewById(R.id.recyclerStudent);
 
-        databaseHelper = new DatabaseHelper(this);
-
-        students.addAll(databaseHelper.getAllStudents());
+      
 
         studentAdapter = new StudentAdapter(students);
 

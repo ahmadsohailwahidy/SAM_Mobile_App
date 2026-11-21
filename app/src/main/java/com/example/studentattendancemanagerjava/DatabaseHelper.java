@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String createAttendanceTable =
                 "CREATE TABLE " + TABLE_ATTENDANCE + " (" +
-                COL_ATTENDANCE_ID + " INEGER PRIMARY KEY AUTOINCREMENT, " +
+                COL_ATTENDANCE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COL_STUDENT_FK + " INTEGER NOT NULL, " +
                 COL_ATTENDANCE_DATE + " TEXT NOT NULL, " +
                 COL_STATUS + " TEXT NOT NULL " +
@@ -103,7 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<Student> getAllStudents() {
         ArrayList<Student> students = new ArrayList<>();
         
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         String[] columns = {
             COL_STUDENT_ID,
