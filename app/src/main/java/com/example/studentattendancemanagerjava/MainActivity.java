@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final ArrayList<String> students = new ArrayList<>();
+    private final ArrayList<Student> students = new ArrayList<>();
     private StudentAdapter studentAdapter;
 
     @Override
@@ -66,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            Student newStudent = new Student(name);
 
-            students.add(name);
+            students.add(newStudent);
 
             int newPosition = students.size() - 1;
             studentAdapter.notifyItemInserted(newPosition);

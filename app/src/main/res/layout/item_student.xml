@@ -1,11 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/txtStudentName"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
     android:layout_marginBottom="8dp"
-    android:padding="16dp"
-    android:textSize="18sp"
-    android:textColor="#202124"
-    android:background="#E8F0FE" />
+    android:background="#E8F0FE" >
+  
+         <!-- xmlns:android="http://schemas.android.com/apk/res/android" -->
+    <TextView
+         android:id="@+id/txtStudentName"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:textSize="18sp"
+         android:textColor="#202124"
+         android:textStyle="bold" />
+
+         <!-- android:padding="16dp" -->
+         <!-- android:layout_marginBottom="8dp" -->
+
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Not Marked"
+        android:textSize="14sp"
+        android:textColor="#555555"
+        android:layout_marginTop="4dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp" >
+
+        <Button
+            android:id="@+id/btnPresent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Present" />
+
+        <Button
+            android:id="@+id/btnAbsent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Absent" />
+    </LinearLayout>
+</LinearLayout>
