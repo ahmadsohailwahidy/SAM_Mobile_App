@@ -10,6 +10,8 @@ import android.database.Cursor;
 
 import android.database.sqlite.SQLiteOpenHelper;
 
+import android.database.sqlite.SQLiteException;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Information
@@ -137,6 +139,62 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return students;
+    }
+
+    public boolean markAttendance(long studentId, String date, Student.Status status) {
+        if (studentId <= 0 || date == null || date.trim().isEmpty() || status == null || status == Student.Status.NOT_MARKED) {
+            return false;
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(COL_STUDENT_FK, studentId);
+        values.put(COL_ATTENDANCE_DATE, date);
+        values.put(COL_STATUS, status.name());
+
+        db.beginTransaction();
+
+        try {
+
+            int updateRows = db.update(
+                TABLE_ATTENDANCE,
+                values,
+                COL_STUDENT_FK + " = ? AND " +
+                        COL_ATTENDANCE_DATE + " = ?",
+                new String[]{
+                    String.valueOf(studentId),
+                    date
+                }
+            );
+
+            if(updateRows == 0) {
+
+                long newRowId = db.insert(
+                    TABLE_ATTENDANCE,
+                    null,
+                    values
+                );
+
+                if (newRowId == -1) {
+                    return false;
+                }
+            }
+
+            db.setTransactionSuccessful();
+
+            return true;
+        } catch (SQLiteException e) {
+            android.util.Log.e(
+                "DatabaseHelper",
+                "Failed to save attendance"
+            );
+
+            return false;
+        } finally {
+            db.endTransaction();
+        }
     }
 
     @Override
