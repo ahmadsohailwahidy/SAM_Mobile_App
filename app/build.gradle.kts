@@ -3,13 +3,14 @@ plugins {
 }
 
 android {
-    namespace = "com.example.studentattendancemanagerjava"
+    // namespace = "com.example.studentattendancemanagerjava"
+    namespace = "com.example.temperatureconverter"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.studentattendancemanagerjava"
+        applicationId = "com.example.temperatureconverter"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
