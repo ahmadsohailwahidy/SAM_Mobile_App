@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import android.content.Intent;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -56,6 +57,19 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
 
         setContentView(R.layout.activity_main);
+
+        Button btnOpenReports = findViewById(R.id.btnOpenReports);
+
+btnOpenReports.setOnClickListener(v -> {
+
+    Intent intent = new Intent(
+        MainActivity.this,
+            AttendanceReportActivity.class
+    );
+
+    startActivity(intent);
+
+});
 
         // Initialize Database
         databaseHelper = new DatabaseHelper(this);

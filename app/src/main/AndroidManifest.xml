@@ -10,7 +10,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StudentAttendanceManagerJava">
+        android:theme="@style/Theme.StudentAttendanceManagerJava"
+        android:name=".AttendanceReportActivity"
+        android:exported="false">
         <activity
             android:name=".MainActivity"
             android:exported="true"
