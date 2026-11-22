@@ -1,2 +1,2 @@
-# Temprature Converter
-smart temprature converter for android
+# Temperature Converter
+smart temperature converter for android
