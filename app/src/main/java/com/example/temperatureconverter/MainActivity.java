@@ -11,6 +11,8 @@ import android.widget.RadioButton;
 
 import android.widget.Button;
 
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,13 +33,61 @@ public class MainActivity extends AppCompatActivity {
 
         RadioButton farenheitConverter = findViewById(R.id.farenheitConverter);
 
-        
-
-
-
 
 
         showResult.setOnClickListener(v -> {
+
+            String input = editTemperature.getText().toString().trim();
+
+            if (input.isEmpty()) {
+                editTemperature.setError("please enter temperature");
+                return;
+            }
+
+            double temperature;
+
+            try {
+                temperature = Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                editTemperature.setError("Invalid temperature");
+                
+                return;
+            }
+
+            if (!Double.isFinite(temperature)) {
+
+                editTemperature.setError("Invalid temperature");
+
+                return;
+            }
+
+            int selectedConversion = radioConversion.getCheckedRadioButtonId();
+
+            double result;
+
+            String source;
+            String target;
+           
+                if (selectedConversion == R.id.celceiusConverter) {
+
+                    result = (temperature - 32) * 5 / 9;
+
+                    source = "°F";
+                    target = "°C";
+                } else if (selectedConversion == R.id.farenheitConverter) {
+
+                    result = (temperature * 9 / 5) + 32;
+
+                    source="°C";
+                    target="°F";
+                } else {
+                    Toast.makeText(this, "Please select conversion type", Toast.LENGTH_SHORT).show();
+
+                    return;
+                }
+           
+
+
 
             Intent intent = new Intent(this, ResultActivity.class);
             startActivity(intent);
