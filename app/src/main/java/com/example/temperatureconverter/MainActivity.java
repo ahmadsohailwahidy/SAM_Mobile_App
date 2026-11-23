@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            Intent intent = new Intent(this, ResultActivity.class);
+            Intent intent = new Intent(MainActivity.this, ResultActivity.class);
 
             intent.putExtra(ORIGINAL, temperature);
 
