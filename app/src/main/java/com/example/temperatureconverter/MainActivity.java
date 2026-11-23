@@ -16,6 +16,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String ORIGINAL = "Exact or Original Temperature";
+
+    public static final String CONVERTED = "Converted Tempereature";
+
+    public static final String SOURCE = "source";
+
+    public static final String TARGET = "target";
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(this, ResultActivity.class);
+
+            intent.putExtra(ORIGINAL, temperature);
+
+            intent.putExtra(CONVERTED, result);
+
+            intent.putExtra(SOURCE, source);
+
+            intent.putExtra(TARGET, target);
+
             startActivity(intent);
 
         });
