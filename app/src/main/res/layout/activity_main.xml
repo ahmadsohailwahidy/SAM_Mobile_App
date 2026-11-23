@@ -44,6 +44,18 @@
         android:layout_width="match_parent"
         android:orientation="vertical">
 
+        <RadioButton
+            android:id="@+id/celceiusConverter"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Farenheit to Celceius" />
+
+        <RadioButton
+            android:id="@+id/farenheitConverter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Celceius to Farenheit" />
+
     </RadioGroup>
     
     <Button

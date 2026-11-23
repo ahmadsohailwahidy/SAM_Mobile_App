@@ -7,6 +7,8 @@ import android.widget.RadioGroup;
 
 import android.widget.EditText;
 
+import android.widget.RadioButton;
+
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +27,13 @@ public class MainActivity extends AppCompatActivity {
 
         RadioGroup radioConversion = findViewById(R.id.radioConversion);
 
+        RadioButton celceiusConverter = findViewById(R.id.celceiusConverter);
+
+        RadioButton farenheitConverter = findViewById(R.id.farenheitConverter);
+
         
+
+
 
 
 
