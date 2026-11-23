@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
         RadioButton farenheitConverter = findViewById(R.id.farenheitConverter);
 
+        TemperatureUtils temp = new TemperatureUtils();
+
 
 
         showResult.setOnClickListener(v -> {
@@ -89,13 +91,13 @@ public class MainActivity extends AppCompatActivity {
            
                 if (selectedConversion == R.id.celceiusConverter) {
 
-                    result = (temperature - 32) * 5 / 9;
+                    result = temp.farenheitToCelceius(temperature);
 
                     source = "°F";
                     target = "°C";
                 } else if (selectedConversion == R.id.farenheitConverter) {
 
-                    result = (temperature * 9 / 5) + 32;
+                    result = temp.celceiusToFarenheit(temperature);
 
                     source="°C";
                     target="°F";
