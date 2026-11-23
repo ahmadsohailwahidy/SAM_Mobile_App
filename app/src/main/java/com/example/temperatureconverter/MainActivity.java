@@ -10,12 +10,21 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import android.widget.Button;
-
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String STATE_TEMPERATURE = "state_temperature";
+    private static final String STATE_CONVERSION = "state_conversion";
+
+    private EditText editTemperature;
+    private RadioGroup radioConversion;
+    
+
+    private static final String TAG = "MainActivity";
 
     public static final String ORIGINAL = "Exact or Original Temperature";
 
@@ -29,13 +38,15 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Log.d(TAG, "onCreate called");
+
         setContentView(R.layout.activity_main);
 
         Button showResult = findViewById(R.id.btnOpenResult);
 
-        EditText editTemperature = findViewById(R.id.editTemperature);
+        editTemperature = findViewById(R.id.editTemperature);
 
-        RadioGroup radioConversion = findViewById(R.id.radioConversion);
+        radioConversion = findViewById(R.id.radioConversion);
 
         RadioButton celceiusConverter = findViewById(R.id.celceiusConverter);
 
@@ -116,4 +127,57 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+
+        String temperature = editTemperature.getText().toString();
+
+        int selectedConversion = radioConversion.getCheckedRadioButtonId();
+
+        state.putString(STATE_TEMPERATURE, temperature);
+
+        state.putInt(STATE_CONVERSION, selectedConversion);
+
+        Log.d(TAG, "activity state saved");
+    }
+
+    // @Override
+    // protected void onResume(){
+    //     super.onResume();
+    //     Log.d(TAG, "onResume Called");
+    // }
+
+    // @Override
+    // protected void onStart(){
+    //     super.onStart();
+    //     Log.d(TAG, "onStart Called");
+    // }
+
+    // @Override
+    // protected void onPause(){
+    //     super.onPause();
+    //     Log.d(TAG, "onPause Called");
+    // }
+
+    // @Override
+    // protected void onStop(){
+    //     super.onStop();
+    //     Log.d(TAG, "onStop Called");
+    // }
+
+    // @Override
+    // protected void onRestart(){
+    //     super.onRestart();
+    //     Log.d(TAG, "onRestart Called");
+    // }
+
+    // @Override
+    // protected void onDestroy(){
+    //     super.onDestroy();
+    //     Log.d(TAG, "onDestroy Called");
+    // }
+
+
 }

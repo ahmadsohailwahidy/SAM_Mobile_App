@@ -10,15 +10,21 @@ import java.util.Locale;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import android.util.Log;
+
 
 
 import android.widget.TextView;
 
 public class ResultActivity extends AppCompatActivity{
 
+    private static final String TAG = "ResultActivity";
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Log.d(TAG, "onCreate called");
 
         setContentView(R.layout.activity_result);
 
@@ -84,5 +90,43 @@ public class ResultActivity extends AppCompatActivity{
         });
 
     }
+
+
+// @Override
+// protected void onStart() {
+//     super.onStart();
+//     Log.d(TAG, "onStart called");
+// }
+
+// @Override
+// protected void onResume() {
+//     super.onResume();
+//     Log.d(TAG, "onResume called");
+// }
+
+// @Override
+// protected void onPause() {
+//     Log.d(TAG, "onPause called");
+//     super.onPause();
+// }
+
+// @Override
+// protected void onStop() {
+//     Log.d(TAG, "onStop called");
+//     super.onStop();
+// }
+
+// @Override
+// protected void onRestart() {
+//     super.onRestart();
+//     Log.d(TAG, "onRestart called");
+// }
+
+// @Override
+// protected void onDestroy() {
+//     Log.d(TAG, "onDestroy called");
+//     super.onDestroy();
+// }
+
 
 }
