@@ -48,6 +48,14 @@
         android:textColor="#1565C0"
         android:layout_marginTop="8dp" />
 
+    <TextView
+        android:id="@+id/txtConversion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Celceius to Farenheit"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp" />
+
     <Button
         android:id="@+id/btnBack"
         android:layout_height="wrap_content"

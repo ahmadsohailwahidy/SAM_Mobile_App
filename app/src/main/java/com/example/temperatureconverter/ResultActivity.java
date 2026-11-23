@@ -26,6 +26,10 @@ public class ResultActivity extends AppCompatActivity{
 
         TextView txtOriginal = findViewById(R.id.txtOriginal);
 
+        TextView txtResult = findViewById(R.id.txtResult);
+
+        TextView txtConversion = findViewById(R.id.txtConversion);
+
         Intent intent = getIntent();
 
         if (!intent.hasExtra(MainActivity.ORIGINAL)
@@ -54,6 +58,21 @@ public class ResultActivity extends AppCompatActivity{
             formatter.format(original) + " " + source
         );
 
+        txtResult.setText(
+            formatter.format(converted) + " " + target
+        );
+
+        String conversionType;
+
+        if(source.equals("°C")) {
+
+            conversionType = "Celceius to Farenheit";
+        } else {
+
+            conversionType = "Farenheit to Celceius";
+        }
+
+        txtConversion.setText(conversionType);
         
 
 
