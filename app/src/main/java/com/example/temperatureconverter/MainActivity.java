@@ -143,6 +143,20 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "activity state saved");
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle restoreState) {
+        super.onRestoreInstanceState(restoreState);
+
+        String temperature = restoreState.getString(STATE_TEMPERATURE, "");
+
+        int selectedConversion = restoreState.getInt(STATE_CONVERSION, R.id.celceiusConverter);
+
+        editTemperature.setText(temperature);
+        radioConversion.check(selectedConversion);
+
+        Log.d(TAG, "Activity state restored");
+    }
+
     // @Override
     // protected void onResume(){
     //     super.onResume();
