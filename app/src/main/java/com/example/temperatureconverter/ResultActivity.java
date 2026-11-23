@@ -48,7 +48,7 @@ public class ResultActivity extends AppCompatActivity{
         DecimalFormat formatter = new DecimalFormat(
             "0.##", DecimalFormatSymbols.getInstance(Locale.US)
         );
-
+        
 
         txtOriginal.setText(
             formatter.format(original) + " " + source

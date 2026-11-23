@@ -32,6 +32,22 @@
         android:textStyle="bold"
         android:layout_marginTop="8dp" />
 
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Converted Temperature"
+        android:textSize="25sp"
+        android:layout_marginTop="14dp" />
+
+    <TextView
+        android:id="@+id/txtResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="77 °F"
+        android:textSize="32sp"
+        android:textColor="#1565C0"
+        android:layout_marginTop="8dp" />
+
     <Button
         android:id="@+id/btnBack"
         android:layout_height="wrap_content"
